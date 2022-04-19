@@ -31,7 +31,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
 .el-header, .el-footer {
   background-color: #B3C0D1;
   color: #333;

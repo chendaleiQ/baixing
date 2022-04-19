@@ -37,7 +37,7 @@
             <el-row>
               <el-col :span="16">
                 <el-row>
-                  <el-col :offset="16" :span="8">
+                  <el-col :offset="10" :span="10">
                     <div class="my-tele">
                       <img src="images/tele.png" alt="">
                       <span>
@@ -131,44 +131,18 @@
             <h3>百星六大技术</h3>
             <h5>百姓技术 匠心种植</h5>
             <el-row justify="center">
-              <el-col :span="1" class="scroll-button">
-                <img src="images/left.png" alt="" @click="clickLeft">
-              </el-col>
-              <el-col :span="12" class="my-scroll-contain">
-                <el-row :gutter="50" ref="myScroll" class="my-scroll">
-                  <el-col :span="8" ref="myScrollCol">
+              <el-col :span="14">
+                <el-carousel :interval="4000" type="card" height="500px" trigger="click">
+                  <el-carousel-item v-for="item in technologys" :key="item" >
                     <div class="my-jishu">
-                      <img src="images/xuanze.png" alt="">
+                      <img :src="item.img" alt="">
                       <div class="jishu-content">
-                        <h4>巨量印痕提取技术</h4>
-                        <p>单词可提取5k-6k毛囊单位</p>
+                        <h4>{{ item.title }}</h4>
+                        <p>{{ item.content }}</p>
                       </div>
                     </div>
-                  </el-col>
-                  <el-col :span="8">
-                    <div class="my-jishu">
-                      <img src="images/xuanze.png" alt="">
-                      <div class="jishu-content">
-                        <h4>活细胞种植技术</h4>
-                        <p>用自体活细胞提炼技术种植到新的位置， 唤醒毛囊活力.</p>
-                      </div>
-                    </div>
-
-                  </el-col>
-                  <el-col :span="8">
-                    <div class="my-jishu">
-                      <img src="images/xuanze.png" alt="">
-                      <div class="jishu-content">
-                        <h4>头发加密技术</h4>
-                        <p>种植区不剃发，采用见缝插针的 方式种植.</p>
-                      </div>
-                    </div>
-
-                  </el-col>
-                </el-row>
-              </el-col>
-              <el-col :span="1" class="scroll-button">
-                <img src="images/right.png" alt="" @click="clickRight">
+                  </el-carousel-item>
+                </el-carousel>
               </el-col>
             </el-row>
           </el-col>
@@ -293,10 +267,20 @@ export default {
   components: {},
   data() {
     return {
-      translate:0,
-      addTranslate:0
+      translate: 0,
+      transNum: 2,
+      addTranslate: 0,
+      technologys: [
+        {img: 'images/xuanze.png', title: '巨量隐痕提取技术', content: '单次可提取5k-6k毛囊单位'},
+        {img: 'images/xuanze.png', title: '活细胞种植技术', content: '用自体活细胞提炼技术种植到新的位置，唤醒毛囊活力'},
+        {img: 'images/xuanze.png', title: '头发加密技术', content: '种植区不剃发，采用见缝插针的方式种植'},
+        {img: 'images/xuanze.png', title: '不剃发技术', content: '种植区，提取区不剃发'},
+        {img: 'images/xuanze.png', title: '多维毛囊移植技术', content: '针对毛囊不足的严重脱发患者，采用体毛腋毛，胡须部位的毛发移植到所需部位'},
+        {img: 'images/xuanze.png', title: '艺术种植', content: '效果自然真实，立体感强'},
+      ]
     }
   },
+
   // vue的两个生命钩子，这里不多解释。
 // window对象，所有浏览器都支持window对象。它表示浏览器窗口，监听滚动事件
   mounted() {
@@ -306,13 +290,6 @@ export default {
     window.removeEventListener('scroll', this.scrollToTop)
   },
   methods: {
-    clickLeft() {
-      console.log(this.$refs.myScrollCol.$el.width)
-      this.$refs.myScroll.$el.style.transform = `translateX(-${this.translate}px)`
-    },
-    clickRight() {
-      this.$refs.myScroll.$el.style.transform = `translateX(100px)`
-    },
     backTop() {
       let timer = setInterval(() => {
         let ispeed = Math.floor(-this.scrollTop / 5)
@@ -351,7 +328,7 @@ export default {
 }
 
 .indexPage {
-  max-width: 100vw;
+  min-width: 1500px;
   box-sizing: border-box;
 
   h3 {
@@ -485,7 +462,9 @@ export default {
 
     .my-scroll-contain {
       overflow: hidden;
-      .my-scroll{
+      width: 60%;
+
+      .my-scroll {
         transform: translateX(0);
         transition: all .5s;
       }
@@ -494,26 +473,20 @@ export default {
 
   .my-jishu {
     width: 100%;
-    height: 416px;
-    background: #FFFFFF;
+    height: 100%;
+    background-color: #fff;
     box-shadow: 0px 6px 12px 1px rgba(136, 147, 160, 0.1);
     //margin-right: 50px;
 
-    &:last-child {
-      margin-right: 0;
-    }
-
     img {
       width: 100%;
-      height: 222px;
     }
 
     .jishu-content {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      height: calc(100% - 222px);
-
+      justify-content: space-between;
+      margin-top: 20px;
       h4 {
         font-size: 24px;
         font-weight: bold;
